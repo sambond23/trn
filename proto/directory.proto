@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+option go_package = "trn/internal/proto/directory";
+
+package directory;
+
+service Directory {
+  rpc RegisterNode (RegisterRequest) returns (RegisterResponse);
+  rpc Heartbeat (HeartbeatRequest) returns (HeartbeatResponse);
+  rpc GetNodes (GetNodesRequest) returns (GetNodesResponse);
+  rpc SyncRegistry (SyncRequest) returns (SyncResponse);
+}
+
+message NodeInfo {
+  uint32 id = 1;
+  string address = 2;
+  bytes public_key = 3;      // ed25519
+  bytes x25519_pub = 4;      // X25519
+  string node_type = 5;
+  bool active = 6;
+  string country = 7;
+  string city = 8;
+  double load = 9;
+  int64 last_seen = 10;
+}
+
+message RegisterRequest {
+  uint32 node_id = 1;
+  string address = 2;
+  bytes public_key = 3;
+  bytes x25519_pub = 4;
+  string country = 5;
+  string city = 6;
+}
+
+message RegisterResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message HeartbeatRequest {
+  uint32 node_id = 1;
+  double load = 2;
+}
+
+message HeartbeatResponse {
+  bool success = 1;
+}
+
+message GetNodesRequest {
+  string role = 1;
+  string country = 2;
+}
+
+message GetNodesResponse {
+  repeated NodeInfo nodes = 1;
+}
+
+message SyncRequest {
+  uint32 node_id = 1;
+}
+
+message SyncResponse {
+  repeated NodeInfo nodes = 1;
+}

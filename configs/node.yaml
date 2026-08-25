@@ -1,0 +1,11 @@
+node_id: 1
+listen: ":4433"
+grpc_listen: ":50051"
+transport: "udp"
+cert_file: "cert.pem"
+key_file: "key.pem"
+country: "US"
+city: "NY"
+exit_addr: "google.com:80"
+max_load: 0.8
+initial_role: "entry"
